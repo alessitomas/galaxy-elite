@@ -1,6 +1,8 @@
+# Importando dependências
 import pygame
 import numpy as np
 
+# Inicializando pygame
 pygame.init()
 
 # Tamanho da tela e definição do FPS
@@ -10,6 +12,7 @@ clock = pygame.time.Clock()
 FPS = 60  # Frames per Second
 BLACK = (0, 0, 0)
 
+# Carregando imagens usadas no jogo
 assets = {
     "inicio": pygame.image.load("imagens/inicio.png"),
     "background": pygame.image.load("imagens/space.jpg"),
@@ -19,6 +22,7 @@ assets = {
     "fim": pygame.image.load("imagens/fim.png")
 }
 
+# Fazendo ajustes nas imagens
 assets['background'] = pygame.transform.scale(assets['background'], (800, 800))
 assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)
@@ -26,6 +30,7 @@ assets['celeste'] = pygame.transform.scale(assets['celeste'], (50, 50))
 assets['alvo'] = pygame.transform.scale(assets['alvo'], (90, 90))
 
 
+# Inicializando posições dos buracos negros e do alvo (Terra)
 x1_celeste = np.random.randint(300, 600)
 y1_celeste = np.random.randint(300, 600)
 c1_celeste = np.array([x1_celeste, y1_celeste])
@@ -38,6 +43,7 @@ x1_alvo = np.random.randint(600,750)
 y1_alvo = np.random.randint(400,600)
 
 
+# Definindo o estado inicial do jogo
 state = {
     "x1_celeste": x1_celeste,
     "y1_celeste": y1_celeste,
@@ -50,42 +56,50 @@ state = {
     "tela": 0
 }
 
+
+# Definindo a posição e a velocidade inicial do personagem (nave)
 s0 = np.array([50,200])
 v0 = np.array([100, 0])
 a = np.array([0, 0.1])
 v = v0
 s = s0
 
+# Constante gravitacional
 C = 100000
 
-
-
+# Variáveis de controle
 rodando = True
 tentativas = 0
 soltei = False
 
+# Loop principal
 while rodando:
+    pos = pygame.mouse.get_pos()    # Capturando a posição do mouse dentro da tela do jogo
 
-    pos = pygame.mouse.get_pos()
+    if state['tela'] == 0:  # Tela inicial
 
-    if state['tela'] == 0:
         screen.blit(assets['inicio'], (0, 0))
         pygame.display.update()
-        for event in pygame.event.get():
 
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 rodando = False
 
-            if event.type == pygame.MOUSEBUTTONUP and pos[0] > 265 and pos[0] < 599 and pos[1] > 559 and pos[1] < 629:
+            if event.type == pygame.MOUSEBUTTONUP and pos[0] > 265 and pos[0] < 599 and pos[1] > 559 and pos[1] < 629:  
+                # Se o usuário clicar em uma determinada faixa de coordenadas, as quais representam o botão de iniciar na tela inicial, o jogo começa (tela 1)
                 state['tela'] = 1
 
+    # Tela do jogo
     if state['tela'] == 1:
+
+        # Carrega os itens do jogo (fundo, personagem, etc.)
         screen.blit(assets['background'], (0, 0))
         screen.blit(assets['personagem'], s)
         screen.blit(assets['celeste'], state['c1_celeste'])
         screen.blit(assets['celeste'], state['c2_celeste'])
         screen.blit(assets['alvo'], (state['x1_alvo'], state['y1_alvo']))
 
+        # Carrega o número de tentativas do usuário e as exibe na tela do jogo
         font = pygame.font.SysFont("arialblack", 20)
         text = font.render("Tentativas: " + str(tentativas), True, (255, 255, 255))
         screen.blit(text, (10, 10))
@@ -93,10 +107,10 @@ while rodando:
         pygame.display.update()
 
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 rodando = False
 
+            # A cada jogada, aumenta em 1 o número de tentativas
             if event.type == pygame.MOUSEBUTTONUP:
                 tentativas += 1
 
@@ -111,7 +125,7 @@ while rodando:
             soltei = False
             s, v = s0, v0
 
-            # verificar se a nave nao esta em orbita infinitamente
+            # Verificar se a nave nao esta em orbita infinitamente
             if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
                 state['x1_celeste'] = np.random.randint(300, 600)
                 state['y1_celeste'] = np.random.randint(300, 600)
@@ -120,33 +134,37 @@ while rodando:
 
         clock.tick(FPS)
 
+        # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
-            # celeste 1
+
+            # Celeste 1
             direcao_a_c1 = state['c1_celeste']  - s
             direcao_a_c1 = direcao_a_c1 / np.linalg.norm(direcao_a_c1)
             mag_a_c1 = C / np.linalg.norm(state['c1_celeste'] - s)**2
             a_c1 = mag_a_c1 * direcao_a_c1
             
-            # celeste 2
+            # Celeste 2
             direcao_a_c2 = state['c2_celeste']  - s
             direcao_a_c2 = direcao_a_c2 / np.linalg.norm(direcao_a_c2)
             mag_a_c2 = C / np.linalg.norm(state['c2_celeste'] - s)**2
             a_c2 = mag_a_c2 * direcao_a_c2
 
-            # resultante 
+            # Resultante 
             a = a_c1 + a_c2
-
 
             v = v + a
             s = s + 0.1 * v
 
+
+        # Se a nave colidir com o alvo (Terra), o jogo acaba (tela 2)
         if np.linalg.norm(s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
             state['tela'] = 2
 
+    # Tela de fim de jogo
     if state['tela'] == 2:
-        screen.blit(assets['fim'], (0, 0))
+        screen.blit(assets['fim'], (0, 0))  # Mostra a tela do final do jogo
         
-        # mostrar uma mensagem de fim de jogo com o numero total de tentativas
+        # Mostrar uma mensagem de fim de jogo com o numero total de tentativas
         font = pygame.font.SysFont("arialblack", 50)
 
         text = font.render("Parabéns!", True, (255, 255, 255))
@@ -165,7 +183,7 @@ while rodando:
             if event.type == pygame.QUIT:
                 rodando = False
 
-            # Reiniciar o jogo
+            # Reiniciar o jogo (reiniciando todas as variáveis)
             if event.type == pygame.MOUSEBUTTONUP and pos[0] > 272 and pos[0] < 550 and pos[1] > 414 and pos[1] < 483:
                 state['tela'] = 1
                 tentativas = 0

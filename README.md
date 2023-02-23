@@ -5,8 +5,8 @@ Jogo criado por Leonardo Scarlato e Tomás Alessi
 Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave que está voltando para a Terra depois de uma de suas missões. No entanto, quando se aproxima do planeta, se depara com dois **buracos negros** que dificultam a chegada até a Terra. Logo, o jogador (viajante) deve encontrar uma maneira de chegar até o planeta com a menor quantidade possível de tentativas (jogadas).
 
 ## Como jogar?
-**1.** Clone o repositório em sua IDE
-**2.** Instale as dependências do projeto (Pygame e Numpy)
+**1.** Clone o repositório em sua IDE <br>
+**2.** Instale as dependências do projeto (Pygame e Numpy)<br>
 **3.** Execute o arquivo `main.py`
 
 

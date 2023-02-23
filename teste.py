@@ -15,18 +15,15 @@ assets = {
     "background": pygame.image.load("imagens/space.jpg"),
     "personagem": pygame.image.load("imagens/spaceship.png"),
     "celeste": pygame.image.load("imagens/black_hole.png"),
-    "alvo": pygame.image.load("imagens/target.png"),
+    "alvo": pygame.image.load("imagens/terra.png"),
     "fim": pygame.image.load("imagens/fim.png")
 }
 
 assets['background'] = pygame.transform.scale(assets['background'], (800, 800))
-
 assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)
-
 assets['celeste'] = pygame.transform.scale(assets['celeste'], (50, 50))
-
-assets['alvo'] = pygame.transform.scale(assets['alvo'], (80, 80))
+assets['alvo'] = pygame.transform.scale(assets['alvo'], (90, 90))
 
 
 x1_celeste = np.random.randint(300, 600)
@@ -89,8 +86,8 @@ while rodando:
         screen.blit(assets['celeste'], state['c2_celeste'])
         screen.blit(assets['alvo'], (state['x1_alvo'], state['y1_alvo']))
 
-        font = pygame.font.SysFont("comicsansms", 20)
-        text = font.render("Tentativas: " + str(tentativas), True, (255, 255, 0))
+        font = pygame.font.SysFont("arialblack", 20)
+        text = font.render("Tentativas: " + str(tentativas), True, (255, 255, 255))
         screen.blit(text, (10, 10))
 
         pygame.display.update()
@@ -115,7 +112,7 @@ while rodando:
             s, v = s0, v0
 
             # verificar se a nave nao esta em orbita infinitamente
-            if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 50:
+            if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
                 state['x1_celeste'] = np.random.randint(300, 600)
                 state['y1_celeste'] = np.random.randint(300, 600)
                 state['c1_celeste'] = np.array([state['x1_celeste'], state['y1_celeste']])

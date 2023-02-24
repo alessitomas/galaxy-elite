@@ -18,8 +18,9 @@ O modelo físico utilizado é baseado no movimento da nave no espaço.
 
 No arquivo Classes foi definida a Classe nave que define posição inicial velocidade inicial e a aceleração da Nave. A aceleração inicia como um vetor [0,0] já que decimos que na galáxia elite as úncias acelerações que influenciariam a nave seriam. A atração gravitacional dos corpos celestes e a Repulção dos corpos repulsores.
 
-Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interferência da aceleração dos corpos.
-    Cálculo da aceleração gravitacional
+Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interferência da aceleração dos corpos.<br>
+
+**Cálculo da aceleração gravitacional**
         
         direcao_aceleracao = self.posicao  - s
         direcao_aceleracao = direcao_aceleracao / np.linalg.norm(direcao_aceleracao)
@@ -35,9 +36,9 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
 
 **4.** Multiplicando o direção pela magnitude temos o vetor final da aceleração gravitacional que esse copro celeste irá influenciar a nave
 
-**5.** Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.
+**5.** Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.<br>
 
-Alteração na posição da Nave
+**Alteração na posição da Nave**
     
     nave.v = nave.v + a
     nave.s = nave.s + 0.1 * nave.v

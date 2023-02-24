@@ -43,9 +43,9 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
     nave.v = nave.v + a
     nave.s = nave.s + 0.1 * nave.v
 
-**6** A aceleração resultante irá somar com a velocidade<br>
+**6.** A aceleração resultante irá somar com a velocidade<br>
 
-**7** A velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
+**7.** A velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
 
 GIF da DEMO Galaxy-Elite
 ![alt text](refactor/imagens/galaxy-elite.gif)

@@ -7,21 +7,21 @@ from classes import Celeste, Nave, Repulsor
 pygame.init()
 pygame.mixer.init()
 
-pygame.mixer.music.load('imagens/musica.mp3')
+pygame.mixer.music.load('assets/musica.mp3')
 pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.1)
 
 efeito_passou = pygame.mixer.Sound(
-    'imagens/passou.mp3')
+    'assets/passou.mp3')
 efeito_passou.set_volume(0.1)
 
 efeito_foguete = pygame.mixer.Sound(
-    'imagens/foguete.mp3')
+    'assets/foguete.mp3')
 efeito_foguete.set_volume(0.01)
 
 efeito_perdeu = pygame.mixer.Sound(
-    'imagens/game_over.mp3')
+    'assets/game_over.mp3')
 efeito_perdeu.set_volume(0.1)
 
 
@@ -33,19 +33,19 @@ clock = pygame.time.Clock()
 FPS = 60  # Frames per Second
 BLACK = (0, 0, 0)
 
-# Carregando imagens usadas no jogo
+# Carregando assets usadas no jogo
 assets = {
-    "inicio": pygame.image.load("imagens/inicio.png"),
-    "background": pygame.image.load("imagens/space.jpg"),
-    "personagem": pygame.image.load("imagens/spaceship.png"),
-    "celeste": pygame.image.load("imagens/black_hole.png"),
-    "alvo": pygame.image.load("imagens/terra.png"),
-    "fim": pygame.image.load("imagens/fim.png"),
-    "repulsor": pygame.image.load("imagens/repulsor.png"),
-    "continuar": pygame.image.load("imagens/homepage.png")
+    "inicio": pygame.image.load("assets/inicio.png"),
+    "background": pygame.image.load("assets/space.jpg"),
+    "personagem": pygame.image.load("assets/spaceship.png"),
+    "celeste": pygame.image.load("assets/black_hole.png"),
+    "alvo": pygame.image.load("assets/terra.png"),
+    "fim": pygame.image.load("assets/fim.png"),
+    "repulsor": pygame.image.load("assets/repulsor.png"),
+    "continuar": pygame.image.load("assets/homepage.png")
 }
 
-# Fazendo ajustes nas imagens
+# Fazendo ajustes nas assets
 assets['background'] = pygame.transform.scale(assets['background'], (800, 800))
 assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)

@@ -20,11 +20,12 @@ No arquivo Classes foi definida a Classe nave que define posição inicial veloc
 
 Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interferência da aceleração dos corpos.
     Cálculo da aceleração gravitacional
+        
         1- direcao_aceleracao = self.posicao  - s
         2- direcao_aceleracao = direcao_aceleracao / np.linalg.norm(direcao_aceleracao)
         3- magnitude_aceleracao = Celeste.C / np.linalg.norm(self.posicao - s)**2
         4- aceleracao = magnitude_aceleracao * direcao_aceleracao
-        return aceleracao
+        5- return aceleracao
 
 1- para decobrir o vetor que representa a direção da aceleração que será aplicada sobre a velocidade da nave, pegamos a posição [x,y] do copro celeste e subitraímos a posição [x,y] da nave.
 
@@ -43,3 +44,6 @@ Alteração na posição da Nave
 
 6- a aceleração resultante irá somar com a velocidade
 7- a velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
+
+GIF da DEMO Galaxy-Elite
+![alt text](refactor/imagens/galaxy-elite.gif)

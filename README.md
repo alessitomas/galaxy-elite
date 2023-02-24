@@ -43,6 +43,7 @@ Alteração na posição da Nave
     nave.s = nave.s + 0.1 * nave.v
 
 **6** A aceleração resultante irá somar com a velocidade<br>
+
 **7** A velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
 
 GIF da DEMO Galaxy-Elite

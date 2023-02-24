@@ -12,3 +12,6 @@ Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave
 
 ## Instruções
 Para fazer a nave se movimentar, basta **clicar em um ponto na tela** o qual você gostaria que a nave fosse. Desta maneira, a nave irá percorrer até chegar ao ponto em que você, usuário, clicou. No entanto, saiba que **a direção pode ser afetada pela gravidade dos buracos negros** 😉
+
+## Descrição matemática do modelo físico implementado
+

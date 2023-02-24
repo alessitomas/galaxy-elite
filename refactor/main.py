@@ -1,7 +1,7 @@
 # Importando dependências
 import pygame
 import numpy as np
-from classes import Celeste, Nave
+from classes import Celeste, Nave, Repulsor
 
 # Inicializando pygame
 pygame.init()
@@ -20,7 +20,8 @@ assets = {
     "personagem": pygame.image.load("imagens/spaceship.png"),
     "celeste": pygame.image.load("imagens/black_hole.png"),
     "alvo": pygame.image.load("imagens/terra.png"),
-    "fim": pygame.image.load("imagens/fim.png")
+    "fim": pygame.image.load("imagens/homepage.png"),
+    "repulsor": pygame.image.load("imagens/repulsor.png")
 }
 
 # Fazendo ajustes nas imagens
@@ -29,6 +30,7 @@ assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)
 assets['celeste'] = pygame.transform.scale(assets['celeste'], (50, 50))
 assets['alvo'] = pygame.transform.scale(assets['alvo'], (90, 90))
+assets['repulsor'] = pygame.transform.scale(assets['repulsor'], (50, 50))
 
 
 # Inicializando posicaoções dos buracos negros e do alvo (Terra)
@@ -40,7 +42,7 @@ y1_alvo = np.random.randint(400,600)
 
 # Definindo o estado inicial do jogo
 state = {
-    "nivel": 0,
+    "nivel": 1,
     "x1_alvo": x1_alvo,
     "y1_alvo": y1_alvo,
     "tela": 0,
@@ -56,8 +58,8 @@ rodando = True
 tentativas = 0
 soltei = False
 # cria os objetos celestres
-c1 = Celeste()
-c2 = Celeste()
+Celeste.gera_corpos(state['nivel'])
+
 # cira nave
 nave = Nave()
 # Loop principal
@@ -80,22 +82,25 @@ while rodando:
     if state['tela'] == 1:
         # se passar de x tentativas termiana a fase
         if tentativas == 10:
-            print(tentativas)
-            print("entrei no de tentativas")
             state['tela'] = 2
             state['venceu'] = False
+            state['nivel'] = 1
 
         # Carrega os itens do jogo (fundo, personagem, etc.)
         screen.blit(assets['background'], (0, 0))
         screen.blit(assets['personagem'], nave.s)
-        screen.blit(assets['celeste'], c1.posicao)
-        screen.blit(assets['celeste'], c2.posicao)
+        for celeste in Celeste.corpos_celestes:
+            screen.blit(assets['celeste'], celeste.posicao)
+        for repulsor in Repulsor.corpos_repulsores:
+            screen.blit(assets['repulsor'], repulsor.posicao)
         screen.blit(assets['alvo'], (state['x1_alvo'], state['y1_alvo']))
 
         # Carrega o número de tentativas do usuário e as exibe na tela do jogo
         font = pygame.font.SysFont("arialblack", 20)
         text = font.render("Tentativas: " + str(tentativas), True, (255, 255, 255))
         screen.blit(text, (10, 10))
+        text1 = font.render("Nível: " + str(state['nivel']), True, (255, 255, 255))
+        screen.blit(text1, (200, 10))
 
         pygame.display.update()
 
@@ -103,7 +108,6 @@ while rodando:
             if event.type == pygame.QUIT:
                 rodando = False
 
-            # A cada jogada, aumenta em 1 o número de tentativas
             if event.type == pygame.MOUSEBUTTONUP:
                 
 
@@ -131,12 +135,13 @@ while rodando:
 
         # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
-            # Celeste 1
-            a_c1 = c1.aceleracao_sobre(nave.s)
-            a_c2 = c2.aceleracao_sobre(nave.s)
-            # Resultante 
-            a = a_c1 + a_c2
-            
+            a = 0
+            # Calculo da aceleracao
+
+            for celeste in Celeste.corpos_celestes:
+                a +=celeste.aceleracao_gravitacional(nave.s)
+            for repulsor in Repulsor.corpos_repulsores:
+                a += repulsor.aceleracao_repulsora(nave.s)
             nave.v = nave.v + a
             nave.s = nave.s + 0.1 * nave.v
 
@@ -183,10 +188,11 @@ while rodando:
                 tentativas = 0
                 soltei = False
                 nave.s, nave.v = nave.s0, nave.v0
-
-                c1 = Celeste()
-                c2 = Celeste()
-
+                
+                Celeste.limpa_corpos()
+                Celeste.gera_corpos(state['nivel'])
+                Repulsor.limpa_corpos()
+                Repulsor.gera_corpos(state['nivel'])
                 x1_alvo = np.random.randint(600, 750)
                 y1_alvo = np.random.randint(400, 600)
                 state['x1_alvo'] = x1_alvo

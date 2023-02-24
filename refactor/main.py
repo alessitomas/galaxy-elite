@@ -5,6 +5,20 @@ from classes import Celeste, Nave, Repulsor
 
 # Inicializando pygame
 pygame.init()
+pygame.mixer.init()
+
+pygame.mixer.music.load('imagens/musica.mp3')
+pygame.mixer.music.set_volume(0.2)
+
+efeito_passou = pygame.mixer.Sound(
+    'imagens/passou.mp3')
+efeito_passou.set_volume(0.1)
+
+efeito_foguete = pygame.mixer.Sound(
+    'imagens/foguete.mp3')
+efeito_foguete.set_volume(0.01)
+
+
 
 # Tamanho da tela e definição do FPS
 screen = pygame.display.set_mode((800, 800))
@@ -20,8 +34,9 @@ assets = {
     "personagem": pygame.image.load("imagens/spaceship.png"),
     "celeste": pygame.image.load("imagens/black_hole.png"),
     "alvo": pygame.image.load("imagens/terra.png"),
-    "fim": pygame.image.load("imagens/homepage.png"),
-    "repulsor": pygame.image.load("imagens/repulsor.png")
+    "fim": pygame.image.load("imagens/fim.png"),
+    "repulsor": pygame.image.load("imagens/repulsor.png"),
+    "continuar": pygame.image.load("imagens/homepage.png")
 }
 
 # Fazendo ajustes nas imagens
@@ -62,8 +77,13 @@ Celeste.gera_corpos(state['nivel'])
 
 # cira nave
 nave = Nave()
+pygame.mixer.music.play(-1)
+# diminuir volume
+pygame.mixer.music.set_volume(0.1)
 # Loop principal
 while rodando:
+
+
     pos = pygame.mouse.get_pos()    # Capturando a posicaoção do mouse dentro da tela do jogo
 
     if state['tela'] == 0:  # Tela inicial
@@ -122,14 +142,7 @@ while rodando:
             soltei = False
             nave.s, nave.v = nave.s0, nave.v0
             tentativas += 1
-
-
-            # # Verificar se a nave nao esta em orbita infinitamente
-            # if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
-            #     state['x1_celeste'] = np.random.randint(300, 600)
-            #     state['y1_celeste'] = np.random.randint(300, 600)
-            #     state['c1_celeste'] = np.array([state['x1_celeste'], state['y1_celeste']])
-   
+            efeito_foguete.stop()
 
         clock.tick(FPS)
 
@@ -145,22 +158,27 @@ while rodando:
             nave.v = nave.v + a
             nave.s = nave.s + 0.1 * nave.v
 
+            efeito_foguete.play()
 
         # Se a nave colidir com o alvo (Terra), o jogo acaba (tela 2)
         if np.linalg.norm(nave.s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
             state['tela'] = 2
             state['nivel'] += 1
             tentativas += 1
+            efeito_foguete.stop()
+            efeito_passou.play()
 
     # Tela de fim de jogo
     if state['tela'] == 2:
         if state['venceu']:
             mensagem_header = "Parabéns!"
             mensagem_texto = "Você acertou o alvo em "
+            
+            screen.blit(assets['continuar'], (0, 0))  # Mostra a tela de vitória
         else: 
             mensagem_header = "Você Falhou"
             mensagem_texto = "Você gastou todas suas "
-        screen.blit(assets['fim'], (0, 0))  # Mostra a tela do final do jogo
+            screen.blit(assets['fim'], (0, 0))  # Mostra a tela do final do jogo
         
         # Mostrar uma mensagem de fim de jogo com o numero total de tentativas
         font = pygame.font.SysFont("arialblack", 50)

@@ -1,5 +1,5 @@
 # 🌌 Galaxy Elite 🌌
-Jogo criado por Leonardo Scarlato e Tomás Alessi
+Jogo criado por Leonardo Scarlato e Tomás Alessi utilizando o que aprendemos na matéria de Algebra Linear (vetores).
 
 ## O que é o Galaxy Elite?
 Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave que está voltando para a Terra depois de uma de suas missões. No entanto, quando se aproxima do planeta, se depara com dois **buracos negros** que dificultam a chegada até a Terra. Logo, o jogador (viajante) deve encontrar uma maneira de chegar até o planeta com a menor quantidade possível de tentativas (jogadas).

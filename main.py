@@ -53,7 +53,8 @@ state = {
     "c2_celeste": np.array([x2_celeste, y2_celeste]),
     "x1_alvo": x1_alvo,
     "y1_alvo": y1_alvo,
-    "tela": 0
+    "tela": 0,
+    "venceu": True
 }
 
 
@@ -92,6 +93,11 @@ while rodando:
     # Tela do jogo
     if state['tela'] == 1:
 
+        # se passar de x tentativas termiana a fase
+        if tentativas == 10:
+            state['tela'] = 2
+
+
         # Carrega os itens do jogo (fundo, personagem, etc.)
         screen.blit(assets['background'], (0, 0))
         screen.blit(assets['personagem'], s)
@@ -112,7 +118,7 @@ while rodando:
 
             # A cada jogada, aumenta em 1 o número de tentativas
             if event.type == pygame.MOUSEBUTTONUP:
-                tentativas += 1
+                
 
                 if not soltei:
                     vetor_direcao = pygame.mouse.get_pos() - s0
@@ -124,6 +130,8 @@ while rodando:
         if s[0]<10 or s[0]>790 or s[1]<10 or s[1]>790: # Se eu chegar ao limite da tela, reinicio a posição do personagem
             soltei = False
             s, v = s0, v0
+            tentativas += 1
+            state['venceu'] = False
 
             # Verificar se a nave nao esta em orbita infinitamente
             if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
@@ -162,18 +170,24 @@ while rodando:
 
     # Tela de fim de jogo
     if state['tela'] == 2:
+        if state['venceu']:
+            mensagem_header = "Parabéns!"
+            mensagem_texto = "Você acertou o alvo em "
+        else: 
+            mensagem_header = "Você Falhou"
+            mensagem_texto = "Você gastou todas suas "
         screen.blit(assets['fim'], (0, 0))  # Mostra a tela do final do jogo
         
         # Mostrar uma mensagem de fim de jogo com o numero total de tentativas
         font = pygame.font.SysFont("arialblack", 50)
 
-        text = font.render("Parabéns!", True, (255, 255, 255))
+        text = font.render(mensagem_header, True, (255, 255, 255))
         text_rect = text.get_rect(center=(400, 100))
         screen.blit(text, text_rect)
 
         font = pygame.font.SysFont("arial", 45)
 
-        text = font.render("Você acertou o alvo em " + str(tentativas) + " tentativa(s)!", True, (255, 255, 255))
+        text = font.render(mensagem_texto + str(tentativas) + " tentativa(s)!", True, (255, 255, 255))
         text_rect = text.get_rect(center=(400, 200))
         screen.blit(text, text_rect)
 

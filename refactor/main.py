@@ -144,17 +144,21 @@ while rodando:
             tentativas += 1
             efeito_foguete.stop()
 
+
         clock.tick(FPS)
 
         # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
-            a = 0
+            a = np.array([0.0,0.0])
             # Calculo da aceleracao
 
             for celeste in Celeste.corpos_celestes:
+                
                 a +=celeste.aceleracao_gravitacional(nave.s)
+                
             for repulsor in Repulsor.corpos_repulsores:
                 a += repulsor.aceleracao_repulsora(nave.s)
+            
             nave.v = nave.v + a
             nave.s = nave.s + 0.1 * nave.v
 

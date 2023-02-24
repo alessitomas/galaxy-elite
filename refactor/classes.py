@@ -32,7 +32,7 @@ class Nave:
     def __init__(self):
         self.s0 = np.array([50,200])
         self.v0 = np.array([100, 0])
-        self.a = np.array([0, 0.1])
+        self.a = np.array([0.0, 0.0])
         self.v = self.v0
         self.s = self.s0
 

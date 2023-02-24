@@ -124,24 +124,20 @@ while rodando:
             tentativas += 1
 
 
-            # # Verificar se a nave nao esta em orbita infinitamente
-            # if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
-            #     state['x1_celeste'] = np.random.randint(300, 600)
-            #     state['y1_celeste'] = np.random.randint(300, 600)
-            #     state['c1_celeste'] = np.array([state['x1_celeste'], state['y1_celeste']])
-   
-
         clock.tick(FPS)
 
         # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
-            a = 0
+            a = np.array([0.0,0.0])
             # Calculo da aceleracao
 
             for celeste in Celeste.corpos_celestes:
+                
                 a +=celeste.aceleracao_gravitacional(nave.s)
+                
             for repulsor in Repulsor.corpos_repulsores:
                 a += repulsor.aceleracao_repulsora(nave.s)
+            
             nave.v = nave.v + a
             nave.s = nave.s + 0.1 * nave.v
 

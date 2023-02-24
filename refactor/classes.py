@@ -1,4 +1,5 @@
 import numpy as np
+
 class Celeste:
     C = 10000
     def __init__(self):
@@ -15,5 +16,10 @@ class Celeste:
         return aceleracao
 
 
-
-
+class Nave:
+    def __init__(self):
+        self.s0 = np.array([50,200])
+        self.v0 = np.array([100, 0])
+        self.a = np.array([0, 0.1])
+        self.v = self.v0
+        self.s = self.s0

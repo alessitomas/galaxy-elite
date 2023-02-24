@@ -1,7 +1,7 @@
 # Importando dependências
 import pygame
 import numpy as np
-from classes import Celeste
+from classes import Celeste, Nave
 
 # Inicializando pygame
 pygame.init()
@@ -48,13 +48,6 @@ state = {
 }
 
 
-# Definindo a posicaoção e a velocidade inicial do personagem (nave)
-s0 = np.array([50,200])
-v0 = np.array([100, 0])
-a = np.array([0, 0.1])
-v = v0
-s = s0
-
 # Constante gravitacional
 C = 10000
 
@@ -65,6 +58,8 @@ soltei = False
 # cria os objetos celestres
 c1 = Celeste()
 c2 = Celeste()
+# cira nave
+nave = Nave()
 # Loop principal
 while rodando:
     pos = pygame.mouse.get_pos()    # Capturando a posicaoção do mouse dentro da tela do jogo
@@ -92,7 +87,7 @@ while rodando:
 
         # Carrega os itens do jogo (fundo, personagem, etc.)
         screen.blit(assets['background'], (0, 0))
-        screen.blit(assets['personagem'], s)
+        screen.blit(assets['personagem'], nave.s)
         screen.blit(assets['celeste'], c1.posicao)
         screen.blit(assets['celeste'], c2.posicao)
         screen.blit(assets['alvo'], (state['x1_alvo'], state['y1_alvo']))
@@ -113,15 +108,15 @@ while rodando:
                 
 
                 if not soltei:
-                    vetor_direcao = pygame.mouse.get_pos() - s0
-                    v = vetor_direcao / np.linalg.norm(vetor_direcao) * 80
+                    vetor_direcao = pygame.mouse.get_pos() - nave.s0
+                    nave.v = vetor_direcao / np.linalg.norm(vetor_direcao) * 80
                     boost_velo = np.random.randn(1)
-                    v *= (boost_velo/10 +1)
+                    nave.v *= (boost_velo/10 +1)
                     soltei = True
 
-        if s[0]<10 or s[0]>790 or s[1]<10 or s[1]>790: # Se eu chegar ao limite da tela, reinicio a posicaoção do personagem
+        if nave.s[0]<10 or nave.s[0]>790 or nave.s[1]<10 or nave.s[1]>790: # Se eu chegar ao limite da tela, reinicio a posicaoção do personagem
             soltei = False
-            s, v = s0, v0
+            nave.s, nave.v = nave.s0, nave.v0
             tentativas += 1
 
 
@@ -137,16 +132,17 @@ while rodando:
         # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
             # Celeste 1
-            a_c1 = c1.aceleracao_sobre(s)
-            a_c2 = c2.aceleracao_sobre(s)
+            a_c1 = c1.aceleracao_sobre(nave.s)
+            a_c2 = c2.aceleracao_sobre(nave.s)
             # Resultante 
             a = a_c1 + a_c2
-            v = v + a
-            s = s + 0.1 * v
+            
+            nave.v = nave.v + a
+            nave.s = nave.s + 0.1 * nave.v
 
 
         # Se a nave colidir com o alvo (Terra), o jogo acaba (tela 2)
-        if np.linalg.norm(s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
+        if np.linalg.norm(nave.s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
             state['tela'] = 2
             state['nivel'] += 1
             tentativas += 1
@@ -186,7 +182,7 @@ while rodando:
                 state['venceu'] = True
                 tentativas = 0
                 soltei = False
-                s, v = s0, v0
+                nave.s, nave.v = nave.s0, nave.v0
 
                 c1 = Celeste()
                 c2 = Celeste()

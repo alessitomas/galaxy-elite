@@ -21,29 +21,29 @@ No arquivo Classes foi definida a Classe nave que define posição inicial veloc
 Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interferência da aceleração dos corpos.
     Cálculo da aceleração gravitacional
         
-        1- direcao_aceleracao = self.posicao  - s
-        2- direcao_aceleracao = direcao_aceleracao / np.linalg.norm(direcao_aceleracao)
-        3- magnitude_aceleracao = Celeste.C / np.linalg.norm(self.posicao - s)**2
-        4- aceleracao = magnitude_aceleracao * direcao_aceleracao
-        5- return aceleracao
+        direcao_aceleracao = self.posicao  - s
+        direcao_aceleracao = direcao_aceleracao / np.linalg.norm(direcao_aceleracao)
+        magnitude_aceleracao = Celeste.C / np.linalg.norm(self.posicao - s)**2
+        aceleracao = magnitude_aceleracao * direcao_aceleracao
+        return aceleracao
 
-1- para decobrir o vetor que representa a direção da aceleração que será aplicada sobre a velocidade da nave, pegamos a posição [x,y] do copro celeste e subitraímos a posição [x,y] da nave.
+**1.** Para decobrir o vetor que representa a direção da aceleração que será aplicada sobre a velocidade da nave, pegamos a posição [x,y] do copro celeste e subitraímos a posição [x,y] da nave.
 
-2- normalizamos esse vetor, dividindo ele pela sua norma, pois queremos extrair apenas a direção e não levar em consideração as intencidades.
+**2.** Normalizamos esse vetor, dividindo ele pela sua norma, pois queremos extrair apenas a direção e não levar em consideração as intencidades.
 
-3- calculo da magnitude da aceleração gravitacional, usando a fórmula da aceleração gravitacional trocando os valores de constante gravitacional e massa da fonte de campo por uam Constante C.
+**3.** Cãlculo da magnitude da aceleração gravitacional, usando a fórmula da aceleração gravitacional trocando os valores de constante gravitacional e massa da fonte de campo por uma constante *C*.
 
-4- mutiplicando o direção pela magnitude temos o vetor final da aceleração gravitacional que esse copro celeste irá influenciar a nave
+**4.** Multiplicando o direção pela magnitude temos o vetor final da aceleração gravitacional que esse copro celeste irá influenciar a nave
 
-5- Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.
+**5.** Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.
 
 Alteração na posição da Nave
     
-    6- nave.v = nave.v + a
-    7- nave.s = nave.s + 0.1 * nave.v
+    nave.v = nave.v + a
+    nave.s = nave.s + 0.1 * nave.v
 
-6- a aceleração resultante irá somar com a velocidade
-7- a velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
+**6** A aceleração resultante irá somar com a velocidade<br>
+**7** A velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
 
 GIF da DEMO Galaxy-Elite
 ![alt text](refactor/imagens/galaxy-elite.gif)

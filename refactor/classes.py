@@ -37,7 +37,7 @@ class Nave:
         self.s = self.s0
 
 class Repulsor:
-    C = 10000
+    C = 2000
     corpos_repulsores = []
     def __init__(self):
         x , y = np.random.randint(300, 600), np.random.randint(300, 600)

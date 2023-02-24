@@ -9,6 +9,8 @@ pygame.mixer.init()
 
 pygame.mixer.music.load('imagens/musica.mp3')
 pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.1)
 
 efeito_passou = pygame.mixer.Sound(
     'imagens/passou.mp3')
@@ -17,6 +19,10 @@ efeito_passou.set_volume(0.1)
 efeito_foguete = pygame.mixer.Sound(
     'imagens/foguete.mp3')
 efeito_foguete.set_volume(0.01)
+
+efeito_perdeu = pygame.mixer.Sound(
+    'imagens/game_over.mp3')
+efeito_perdeu.set_volume(0.1)
 
 
 
@@ -77,10 +83,10 @@ Celeste.gera_corpos(state['nivel'])
 
 # cira nave
 nave = Nave()
-pygame.mixer.music.play(-1)
-# diminuir volume
-pygame.mixer.music.set_volume(0.1)
-# Loop principal
+perdeu = True
+foguete = True
+
+# Loop principal do jogo
 while rodando:
 
 
@@ -129,7 +135,9 @@ while rodando:
                 rodando = False
 
             if event.type == pygame.MOUSEBUTTONUP:
-                
+
+                if foguete:
+                    efeito_foguete.play()
 
                 if not soltei:
                     vetor_direcao = pygame.mouse.get_pos() - nave.s0
@@ -149,6 +157,7 @@ while rodando:
 
         # Se o usuário soltou o botão esquerdo do mouse, a nave é lançada
         if soltei:
+
             a = np.array([0.0,0.0])
             # Calculo da aceleracao
 
@@ -162,13 +171,12 @@ while rodando:
             nave.v = nave.v + a
             nave.s = nave.s + 0.1 * nave.v
 
-            efeito_foguete.play()
-
         # Se a nave colidir com o alvo (Terra), o jogo acaba (tela 2)
         if np.linalg.norm(nave.s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
             state['tela'] = 2
             state['nivel'] += 1
             tentativas += 1
+
             efeito_foguete.stop()
             efeito_passou.play()
 
@@ -183,6 +191,10 @@ while rodando:
             mensagem_header = "Você Falhou"
             mensagem_texto = "Você gastou todas suas "
             screen.blit(assets['fim'], (0, 0))  # Mostra a tela do final do jogo
+
+            if perdeu:
+                efeito_perdeu.play()
+                perdeu = False
         
         # Mostrar uma mensagem de fim de jogo com o numero total de tentativas
         font = pygame.font.SysFont("arialblack", 50)

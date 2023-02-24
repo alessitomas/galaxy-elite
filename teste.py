@@ -15,7 +15,7 @@ assets = {
     "background": pygame.image.load("imagens/space.jpg"),
     "personagem": pygame.image.load("imagens/spaceship.png"),
     "celeste": pygame.image.load("imagens/black_hole.png"),
-    "alvo": pygame.image.load("imagens/terra.png"),
+    "alien": pygame.image.load("imagens/alien.png"),
     "fim": pygame.image.load("imagens/fim.png")
 }
 
@@ -23,8 +23,10 @@ assets['background'] = pygame.transform.scale(assets['background'], (800, 800))
 assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)
 assets['celeste'] = pygame.transform.scale(assets['celeste'], (50, 50))
-assets['alvo'] = pygame.transform.scale(assets['alvo'], (90, 90))
+assets['alien'] = pygame.transform.scale(assets['alien'], (60, 60))
 
+tiro = pygame.Surface((10, 10))
+tiro.fill((0, 255, 0))
 
 x1_celeste = np.random.randint(300, 600)
 y1_celeste = np.random.randint(300, 600)
@@ -34,8 +36,8 @@ x2_celeste = np.random.randint(300, 600)
 y2_celeste = np.random.randint(300, 600)
 c2_celeste = np.array([x2_celeste, y2_celeste])
 
-x1_alvo = np.random.randint(600,750)
-y1_alvo = np.random.randint(400,600)
+x1_alien = np.random.randint(600,750)
+y1_alien = np.random.randint(400,600)
 
 
 state = {
@@ -45,24 +47,24 @@ state = {
     "x2_celeste": x2_celeste,
     "y2_celeste": y2_celeste,
     "c2_celeste": np.array([x2_celeste, y2_celeste]),
-    "x1_alvo": x1_alvo,
-    "y1_alvo": y1_alvo,
+    "x1_alien": x1_alien,
+    "y1_alien": y1_alien,
     "tela": 0
 }
 
-s0 = np.array([50,200])
+s_nave = np.array([50,200])
 v0 = np.array([100, 0])
 a = np.array([0, 0.1])
 v = v0
-s = s0
+s = np.array([80,230])
 
 C = 100000
 
 
-
 rodando = True
-tentativas = 0
+tentativas = 10
 soltei = False
+deu_tiro = True
 
 while rodando:
 
@@ -81,10 +83,11 @@ while rodando:
 
     if state['tela'] == 1:
         screen.blit(assets['background'], (0, 0))
-        screen.blit(assets['personagem'], s)
         screen.blit(assets['celeste'], state['c1_celeste'])
         screen.blit(assets['celeste'], state['c2_celeste'])
-        screen.blit(assets['alvo'], (state['x1_alvo'], state['y1_alvo']))
+        screen.blit(assets['alien'], (state['x1_alien'], state['y1_alien']))
+        screen.blit(tiro, s)
+        screen.blit(assets['personagem'], s_nave)
 
         font = pygame.font.SysFont("arialblack", 20)
         text = font.render("Tentativas: " + str(tentativas), True, (255, 255, 255))
@@ -97,11 +100,12 @@ while rodando:
             if event.type == pygame.QUIT:
                 rodando = False
 
+            # se o botao do mouse for solto e a posição do tiro estiver sendo atualizada, eu solto o tiro e atualizo o numero de tentativas
             if event.type == pygame.MOUSEBUTTONUP:
-                tentativas += 1
 
                 if not soltei:
-                    vetor_direcao = pygame.mouse.get_pos() - s0
+                    deu_tiro = False
+                    vetor_direcao = pygame.mouse.get_pos() - s_nave
                     v = vetor_direcao / np.linalg.norm(vetor_direcao) * 80
                     boost_velo = np.random.randn(1)
                     v *= (boost_velo/10 +1)
@@ -109,7 +113,10 @@ while rodando:
 
         if s[0]<10 or s[0]>790 or s[1]<10 or s[1]>790: # Se eu chegar ao limite da tela, reinicio a posição do personagem
             soltei = False
-            s, v = s0, v0
+            s = [80,230]
+            v = v0
+
+            tentativas -= 1
 
             # verificar se a nave nao esta em orbita infinitamente
             if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
@@ -121,6 +128,7 @@ while rodando:
         clock.tick(FPS)
 
         if soltei:
+            deu_tiro = True
             # celeste 1
             direcao_a_c1 = state['c1_celeste']  - s
             direcao_a_c1 = direcao_a_c1 / np.linalg.norm(direcao_a_c1)
@@ -135,12 +143,10 @@ while rodando:
 
             # resultante 
             a = a_c1 + a_c2
-
-
             v = v + a
             s = s + 0.1 * v
 
-        if np.linalg.norm(s - np.array([state['x1_alvo'], state['y1_alvo']])) < 40:
+        if np.linalg.norm(s - np.array([state['x1_alien'], state['y1_alien']])) < 50:
             state['tela'] = 2
 
     if state['tela'] == 2:
@@ -155,9 +161,16 @@ while rodando:
 
         font = pygame.font.SysFont("arial", 45)
 
-        text = font.render("Você acertou o alvo em " + str(tentativas) + " tentativa(s)!", True, (255, 255, 255))
-        text_rect = text.get_rect(center=(400, 200))
-        screen.blit(text, text_rect)
+        if tentativas > 0:
+            text = font.render("Você acertou o alien em " + str(10 - tentativas) + " tentativa(s)!", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(400, 200))
+            screen.blit(text, text_rect)
+
+        else:
+            text = font.render("Você não acertou o alien!", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(400, 200))
+            screen.blit(text, text_rect)
+        
 
 
         for event in pygame.event.get():
@@ -170,7 +183,8 @@ while rodando:
                 state['tela'] = 1
                 tentativas = 0
                 soltei = False
-                s, v = s0, v0
+                s = [80,230]
+                v = v0
 
                 x1_celeste = np.random.randint(300, 600)
                 y1_celeste = np.random.randint(300, 600)
@@ -180,10 +194,10 @@ while rodando:
                 y2_celeste = np.random.randint(300, 600)
                 state['c2_celeste'] = np.array([x2_celeste, y2_celeste])
 
-                x1_alvo = np.random.randint(600, 750)
-                y1_alvo = np.random.randint(400, 600)
-                state['x1_alvo'] = x1_alvo
-                state['y1_alvo'] = y1_alvo
+                x1_alien = np.random.randint(600, 750)
+                y1_alien = np.random.randint(400, 600)
+                state['x1_alien'] = x1_alien
+                state['y1_alien'] = y1_alien
                 
 
 

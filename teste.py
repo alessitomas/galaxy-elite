@@ -15,7 +15,7 @@ assets = {
     "background": pygame.image.load("imagens/space.jpg"),
     "personagem": pygame.image.load("imagens/spaceship.png"),
     "celeste": pygame.image.load("imagens/black_hole.png"),
-    "alien": pygame.image.load("imagens/alien.png"),
+    "alien": pygame.image.load("imagens/alien2.png"),
     "fim": pygame.image.load("imagens/fim.png")
 }
 
@@ -23,9 +23,9 @@ assets['background'] = pygame.transform.scale(assets['background'], (800, 800))
 assets['personagem'] = pygame.transform.scale(assets['personagem'], (70, 70))
 assets['personagem'] = pygame.transform.rotate(assets['personagem'], 270)
 assets['celeste'] = pygame.transform.scale(assets['celeste'], (50, 50))
-assets['alien'] = pygame.transform.scale(assets['alien'], (60, 60))
+assets['alien'] = pygame.transform.scale(assets['alien'], (80, 80))
 
-tiro = pygame.Surface((10, 10))
+tiro = pygame.Surface((12, 12))
 tiro.fill((0, 255, 0))
 
 x1_celeste = np.random.randint(300, 600)
@@ -58,11 +58,11 @@ a = np.array([0, 0.1])
 v = v0
 s = np.array([80,230])
 
-C = 100000
+C = 14000
 
 
 rodando = True
-tentativas = 10
+tentativas = 0
 soltei = False
 deu_tiro = True
 
@@ -116,7 +116,7 @@ while rodando:
             s = [80,230]
             v = v0
 
-            tentativas -= 1
+            tentativas += 1
 
             # verificar se a nave nao esta em orbita infinitamente
             if np.linalg.norm(s - np.array([state['x1_celeste'], state['y1_celeste']])) < 60:
@@ -146,13 +146,14 @@ while rodando:
             v = v + a
             s = s + 0.1 * v
 
-        if np.linalg.norm(s - np.array([state['x1_alien'], state['y1_alien']])) < 50:
+        # colisão
+        if np.linalg.norm(s - np.array([state['x1_alien'], state['y1_alien']])) < 20:
             state['tela'] = 2
 
     if state['tela'] == 2:
         screen.blit(assets['fim'], (0, 0))
-        
-        # mostrar uma mensagem de fim de jogo com o numero total de tentativas
+
+            # mostrar uma mensagem de fim de jogo com o numero total de tentativas
         font = pygame.font.SysFont("arialblack", 50)
 
         text = font.render("Parabéns!", True, (255, 255, 255))
@@ -161,17 +162,17 @@ while rodando:
 
         font = pygame.font.SysFont("arial", 45)
 
-        if tentativas > 0:
-            text = font.render("Você acertou o alien em " + str(10 - tentativas) + " tentativa(s)!", True, (255, 255, 255))
-            text_rect = text.get_rect(center=(400, 200))
-            screen.blit(text, text_rect)
+        if tentativas >= 1:
 
-        else:
-            text = font.render("Você não acertou o alien!", True, (255, 255, 255))
+            text = font.render("Você acertou o alien em " + str(1 + tentativas) + " tentativa(s)!", True, (255, 255, 255))
             text_rect = text.get_rect(center=(400, 200))
             screen.blit(text, text_rect)
         
-
+        elif tentativas == 0:
+            text = font.render("Você acertou o alien em " + str(1 + tentativas) + " tentativa!", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(400, 200))
+            screen.blit(text, text_rect)
+        
 
         for event in pygame.event.get():
 

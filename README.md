@@ -44,3 +44,6 @@ Alteração na posição da Nave
 
 6- a aceleração resultante irá somar com a velocidade
 7- a velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
+
+GIF da DEMO Galaxy-Elite
+![alt text](refactor/imagens/galaxy-elite.gif)

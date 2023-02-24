@@ -30,13 +30,13 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
 
 **1.** Para decobrir o vetor que representa a direção da aceleração que será aplicada sobre a velocidade da nave, pegamos a posição [x,y] do copro celeste e subitraímos a posição [x,y] da nave.
 
-**2.** Normalizamos esse vetor, dividindo ele pela sua norma, pois queremos extrair apenas a direção e não levar em consideração as intencidades.
+**2.** Normalizamos esse vetor, dividindo ele pela sua norma, pois queremos extrair apenas a direção e não levar em consideração as intensidades.
 
-**3.** Cãlculo da magnitude da aceleração gravitacional, usando a fórmula da aceleração gravitacional trocando os valores de constante gravitacional e massa da fonte de campo por uma constante *C*.
+**3.** Cálculo da magnitude da aceleração gravitacional, usando a fórmula da aceleração gravitacional trocando os valores de constante gravitacional e massa da fonte de campo por uma constante *C*.
 
 **4.** Multiplicando o direção pela magnitude temos o vetor final da aceleração gravitacional que esse copro celeste irá influenciar a nave
 
-**5.** Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.<br>
+**5.** Aceleração Resultante -> depois de decobrir a aceleração de um corpo celeste. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.<br>
 
 **Alteração na posição da Nave**
     

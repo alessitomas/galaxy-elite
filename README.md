@@ -50,5 +50,6 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
 
 **7.** A velocidade uam vez influenciada irá ser reduzida a 10% (para melhor gameplay) e será somada coma posição da Nave
 
-**GIF da DEMO Galaxy-Elite**
+# GIF da Demo do Galaxy Elite
+
 ![alt text](refactor/assets/galaxy-elite.gif)

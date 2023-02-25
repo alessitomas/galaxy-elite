@@ -39,7 +39,7 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
 
 **4.** Multiplicando o direção pela magnitude temos o vetor final da aceleração gravitacional que esse copro celeste irá influenciar a nave
 
-**5.** Aceleração Resultante -> depois de decobrir a aceleração de um corpo celeste. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.<br>
+**5.** Aceleração Resultante -> depois de decobrir a aceleração de um corpo celeste podemos somar todas as encontradas para chegar na aceleração resultante sobre a nave.<br>
 
 **Alteração na posição da Nave**
     

@@ -2,7 +2,9 @@
 Jogo criado por Leonardo Scarlato e Tomás Alessi utilizando o que aprendemos na matéria de Algebra Linear (vetores).
 
 ## O que é o Galaxy Elite?
-Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave que está voltando para a Terra depois de uma de suas missões. No entanto, quando se aproxima do planeta, se depara com dois **buracos negros** que dificultam a chegada até a Terra. Logo, o jogador (viajante) deve encontrar uma maneira de chegar até o planeta com a menor quantidade possível de tentativas (jogadas).
+Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave que está voltando para a Terra depois de uma de suas missões. No entanto, quando se aproxima do planeta, se depara com **buracos negros** e **repulsores** que dificultam a chegada até a Terra (buracos negros atraem a nave, enquanto que os repulsores a "empurram"). Logo, o jogador (viajante) deve encontrar uma maneira de chegar até o planeta com a menor quantidade possível de tentativas (jogadas), sendo que, caso este número ultrapasse 10, o jogo acaba.
+
+O jogo é constituído por 10 níveis diferentes, os quais possuem cada vez mais obstáculos a serem superados. No entanto, após o nível 10, este número fica constante e, portanto, apenas a posição das entidades se altera.
 
 ## Como jogar?
 **1.** Clone o repositório em sua IDE <br>
@@ -12,7 +14,7 @@ Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave
 
 
 ## Instruções
-Para fazer a nave se movimentar, basta **clicar em um ponto na tela** o qual você gostaria que a nave fosse. Desta maneira, a nave irá percorrer até chegar ao ponto em que você, usuário, clicou. No entanto, saiba que **a direção pode ser afetada pela gravidade dos buracos negros** 😉
+Para fazer a nave se movimentar, basta **clicar em um ponto na tela** o qual você gostaria que a nave fosse. Desta maneira, a nave irá percorrer até chegar ao ponto em que você, usuário, clicou. No entanto, lembre-se que **a direção pode ser afetada pela gravidade dos buracos negros e dos repulsores** 😉
 
 ## Descrição matemática do modelo físico implementado
 O modelo físico utilizado é baseado no movimento da nave no espaço.

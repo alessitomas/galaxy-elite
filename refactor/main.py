@@ -5,6 +5,8 @@ from classes import Celeste, Nave, Repulsor
 
 # Inicializando pygame
 pygame.init()
+
+# Inicializando mixer (efeitos sonoros e musica de fundo)
 pygame.mixer.init()
 
 pygame.mixer.music.load('assets/musica.mp3')
@@ -146,7 +148,8 @@ while rodando:
                     nave.v *= (boost_velo/10 +1)
                     soltei = True
 
-        if nave.s[0]<10 or nave.s[0]>790 or nave.s[1]<10 or nave.s[1]>790: # Se eu chegar ao limite da tela, reinicio a posicaoção do personagem
+        # Se eu chegar ao limite da tela, reinicio a posicaoção do personagem
+        if nave.s[0]<10 or nave.s[0]>790 or nave.s[1]<10 or nave.s[1]>790: 
             soltei = False
             nave.s, nave.v = nave.s0, nave.v0
             tentativas += 1

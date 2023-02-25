@@ -7,7 +7,8 @@ Galaxy Elite é um jogo criado em pygame onde o usuário comanda uma espaçonave
 ## Como jogar?
 **1.** Clone o repositório em sua IDE <br>
 **2.** Instale as dependências do projeto (Pygame e Numpy)<br>
-**3.** Execute o arquivo `main.py`
+**3.** Entrar na pasta "refactor"
+**4.** Execute o arquivo `main.py`
 
 
 ## Instruções

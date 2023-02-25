@@ -9,7 +9,7 @@ O jogo é constituído por 10 níveis diferentes, os quais possuem cada vez mais
 ## Como jogar?
 **1.** Clone o repositório em sua IDE <br>
 **2.** Instale as dependências do projeto (Pygame e Numpy)<br>
-**3.** Entrar na pasta "refactor" usando o comando <code> cd .\refactor\ <br>
+**3.** Entrar na pasta "refactor" usando o comando <code> cd .\refactor\ </code> <br>
 **4.** Execute o arquivo `main.py`
 
 

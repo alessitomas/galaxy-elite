@@ -37,6 +37,8 @@ Assim que se inicia uma fase e a nave é lançada sua velocidade sofre a interfe
 
 5- Aceleração Resultante: depois de decobrir a aceleração de um corpo celeste 4-. Podemos somar todas as encontradas para chegar na aceleração resultante sobre a Nave.
 
+Os repulsores funcionam da mesma maneira, pórem o direção da aceleração é multiplicada por -1, para assim repelir a nave não atrair ele.
+
 Alteração na posição da Nave
     
     6- nave.v = nave.v + a
